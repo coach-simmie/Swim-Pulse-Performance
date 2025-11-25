@@ -12,53 +12,82 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
-    :root { --primary:#0a1d37; --accent:#00d4ff; --light:#f8fafc; --gold:#fbbf24; }
-    body { margin:0; font-family:'Inter',sans-serif; background:var(--light); color:#1e293b; line-height:1.6; }
-    
-    /* Header with Katie Ledecky Background */
-    header { 
-      background: linear-gradient(rgba(10, 29, 55, 0.6), rgba(30, 64, 175, 0.4)), 
-                  url('https://cdn.britannica.com/01/193601-050-F8F18A9B/Katie-Ledecky-American-lead-way-women-world-2016.jpg') center/cover no-repeat fixed; 
-      color:white; text-align:center; padding:100px 20px; position:relative; 
-      min-height:60vh; display:flex; flex-direction:column; justify-content:center; 
-    }
-    header::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:1; }
-    header > * { position:relative; z-index:2; }
-    h1 { font-size:3em; font-weight:900; margin:0; text-shadow:2px 2px 4px rgba(0,0,0,0.5); }
-    
-    .btn { background:var(--accent); color:#000; padding:16px 32px; border-radius:50px; font-weight:bold; text-decoration:none; display:inline-block; margin:15px; font-size:1.1em; box-shadow:0 8px 20px rgba(0,212,255,0.3); }
-    .section { padding:50px 20px; max-width:1200px; margin:auto; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
-    .card { background:white; border-radius:20px; padding:30px; box-shadow:0 12px 35px rgba(0,0,0,0.1); text-align:center; transition:0.3s; }
-    .card:hover { transform:translateY(-12px); box-shadow:0 20px 40px rgba(0,0,0,0.15); }
-    .card i { font-size:3.5em; color:var(--accent); margin-bottom:20px; }
-    .login-box { max-width:420px; margin:60px auto; background:white; padding:50px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.15); text-align:center; }
+    :root { --p:#0a1d37; --a:#00d4ff; }
+    body { margin:0; font-family:'Inter',sans-serif; background:#f8fafc; }
+    header { background:linear-gradient(rgba(10,29,55,0.8),rgba(30,64,175,0.7)), url('https://cdn.britannica.com/01/193601-050-F8F18A9B/Katie-Ledecky-American-lead-way-women-world-2016.jpg') center/cover fixed; color:white; text-align:center; padding:120px 20px; }
+    h1 { font-size:3.5em; margin:0; text-shadow:3px 3px 10px #000; }
+    .sub { font-size:1.8em; font-weight:600; text-shadow:2px 2px 8px #000; }
+    .btn { background:var(--a); color:black; padding:16px 36px; border-radius:50px; font-weight:bold; margin:15px; text-decoration:none; display:inline-block; }
+    .btn-w { background:white; color:var(--p); }
+    .login-box { max-width:420px; margin:70px auto; background:white; padding:50px; border-radius:25px; box-shadow:0 25px 60px rgba(0,0,0,0.2); text-align:center; }
     input, button { width:100%; padding:16px; margin:12px 0; border-radius:12px; border:none; font-size:1.1em; }
-    button { background:var(--primary); color:white; font-weight:bold; cursor:pointer; }
-    #private-area { display:none; background:var(--light); padding:40px 20px; }
-    .pb { font-weight:bold; color:var(--primary); font-size:1.1em; }
-    .pb-date { font-size:0.9em; color:#64748b; }
-    footer { background:var(--primary); color:white; text-align:center; padding:40px; font-size:1.1em; }
-    .resource-link { color:var(--accent); text-decoration:none; font-weight:600; }
+    button { background:var(--p); color:white; font-weight:bold; }
+    #private { display:none; }
+    .card { background:white; margin:20px; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+    .pb { font-weight:bold; color:var(--p); }
   </style>
 </head>
 <body>
 
-  <!-- PUBLIC HOMEPAGE WITH KATIE LEDECKY BG -->
-  <header>
-    <h1>Swim Pulse Performance</h1>
-    <p style="font-size:1.5em; margin:20px 0; max-width:600px; margin-left:auto; margin-right:auto;">Uganda's Premier Youth Swimming Development Program<br>Inspired by Champions Like Katie Ledecky</p>
-    <a href="#resources" class="btn">Free Resources</a>
-    <a href="#login" class="btn" style="background:white;color:#000;">Swimmer Login</a>
-  </header>
+<header>
+  <h1>Swim Pulse Performance</h1>
+  <p class="sub">A Science-Based Swim Program</p>
+  <a href="#resources" class="btn">Free Resources</a>
+  <a href="#login" class="btn btn-w">Swimmer Login</a>
+</header>
 
-  <div class="section" id="about">
-    <h2 style="color:var(--primary);">About Swim Pulse Performance</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Our Mission</h3>
-        <p>Building confident, technically excellent swimmers through science-based training, individual attention, and a love for the sport.</p>
-      </div>
-      <div class="card">
-        <h3>Head Coach</h3>
-        <p>15+ years coaching | Multiple national champions | ASCA & NISCA certified | Specializes in stroke
+<div class="login-box" id="login">
+  <p style="font-size:4em;">Swimmer</p>
+  <input type="text" id="name" placeholder="Enter your name (e.g. Ethan)">
+  <button onclick="login()">Enter Portal</button>
+</div>
+
+<div id="private">
+  <div style="padding:40px 20px; text-align:center;">
+    <h1 style="color:var(--p);">Welcome back, <span id="display"></span>!</h1>
+    <div class="card"><h3>Today's Workout</h3><p id="workout">…</p></div>
+    <div class="card"><h3>Current Goal</h3><p id="goal">…</p></div>
+    <div class="card"><h3>Coach's Note</h3><p id="note">…</p></div>
+    <div class="card"><h3>Personal Bests (Nov 2025)</h3><div id="pbs" style="text-align:left;"></div></div>
+    <button onclick="localStorage.removeItem('swimmer');location.reload()" class="btn" style="margin:30px;">Logout</button>
+  </div>
+</div>
+
+<script>
+// ←←← PASTE YOUR REAL CONFIG HERE (from step 4) ←←←
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef123456"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function login() {
+  const name = document.getElementById('name').value.trim();
+  if (!name) return alert("Enter name");
+  db.collection("swimmers").doc(name.toLowerCase()).get().then(doc => {
+    if (doc.exists) {
+      localStorage.setItem('swimmer', name.toLowerCase());
+      const d = doc.data();
+      document.getElementById('display').textContent = d.name;
+      document.getElementById('workout').innerHTML = d.todayWorkout;
+      document.getElementById('goal').textContent = d.goal;
+      document.getElementById('note').textContent = d.strokeNote;
+      document.getElementById('pbs').innerHTML = Object.entries(d.pbs||{})
+        .map(([e,t])=>`${e}: <span class="pb">${t}</span>`).join('<br>');
+      document.getElementById('login').style.display='none';
+      document.getElementById('private').style.display='block';
+    } else alert("Name not found — contact coach");
+  });
+}
+if (localStorage.getItem('swimmer')) {
+  document.getElementById('name').value = localStorage.getItem('swimmer');
+  login();
+}
+</script>
+</body>
+</html>
