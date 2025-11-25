@@ -14,9 +14,19 @@
   <style>
     :root { --primary:#0a1d37; --accent:#00d4ff; --light:#f8fafc; --gold:#fbbf24; }
     body { margin:0; font-family:'Inter',sans-serif; background:var(--light); color:#1e293b; line-height:1.6; }
-    header { background:linear-gradient(135deg,var(--primary),#1e40af); color:white; text-align:center; padding:80px 20px; }
-    h1 { font-size:3em; font-weight:900; margin:0; }
-    .btn { background:var(--accent); color:#000; padding:16px 32px; border-radius:50px; font-weight:bold; text-decoration:none; display:inline-block; margin:15px; font-size:1.1em; }
+    
+    /* Header with Katie Ledecky Background */
+    header { 
+      background: linear-gradient(rgba(10, 29, 55, 0.6), rgba(30, 64, 175, 0.4)), 
+                  url('https://cdn.britannica.com/01/193601-050-F8F18A9B/Katie-Ledecky-American-lead-way-women-world-2016.jpg') center/cover no-repeat fixed; 
+      color:white; text-align:center; padding:100px 20px; position:relative; 
+      min-height:60vh; display:flex; flex-direction:column; justify-content:center; 
+    }
+    header::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:1; }
+    header > * { position:relative; z-index:2; }
+    h1 { font-size:3em; font-weight:900; margin:0; text-shadow:2px 2px 4px rgba(0,0,0,0.5); }
+    
+    .btn { background:var(--accent); color:#000; padding:16px 32px; border-radius:50px; font-weight:bold; text-decoration:none; display:inline-block; margin:15px; font-size:1.1em; box-shadow:0 8px 20px rgba(0,212,255,0.3); }
     .section { padding:50px 20px; max-width:1200px; margin:auto; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
     .card { background:white; border-radius:20px; padding:30px; box-shadow:0 12px 35px rgba(0,0,0,0.1); text-align:center; transition:0.3s; }
@@ -26,23 +36,24 @@
     input, button { width:100%; padding:16px; margin:12px 0; border-radius:12px; border:none; font-size:1.1em; }
     button { background:var(--primary); color:white; font-weight:bold; cursor:pointer; }
     #private-area { display:none; background:var(--light); padding:40px 20px; }
-    .pb { font-weight:bold; color:var(--primary); }
+    .pb { font-weight:bold; color:var(--primary); font-size:1.1em; }
+    .pb-date { font-size:0.9em; color:#64748b; }
     footer { background:var(--primary); color:white; text-align:center; padding:40px; font-size:1.1em; }
     .resource-link { color:var(--accent); text-decoration:none; font-weight:600; }
   </style>
 </head>
 <body>
 
-  <!-- PUBLIC HOMEPAGE -->
+  <!-- PUBLIC HOMEPAGE WITH KATIE LEDECKY BG -->
   <header>
     <h1>Swim Pulse Performance</h1>
-    <p style="font-size:1.5em; margin:20px 0;">Uganda's Premier Youth Swimming Development Program</p>
+    <p style="font-size:1.5em; margin:20px 0; max-width:600px; margin-left:auto; margin-right:auto;">Uganda's Premier Youth Swimming Development Program<br>Inspired by Champions Like Katie Ledecky</p>
     <a href="#resources" class="btn">Free Resources</a>
     <a href="#login" class="btn" style="background:white;color:#000;">Swimmer Login</a>
   </header>
 
   <div class="section" id="about">
-    <h2>About Swim Pulse Performance</h2>
+    <h2 style="color:var(--primary);">About Swim Pulse Performance</h2>
     <div class="grid">
       <div class="card">
         <h3>Our Mission</h3>
@@ -50,119 +61,4 @@
       </div>
       <div class="card">
         <h3>Head Coach</h3>
-        <p>15+ years coaching | Multiple national champions | ASCA & NISCA certified | Specializes in stroke mechanics & race strategy</p>
-      </div>
-      <div class="card">
-        <h3>Results Speak</h3>
-        <p>100% PB improvement rate | Multiple East Africa records | Direct pathway to national team selection</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="resources">
-    <h2>Free Resources for All Swimmers</h2>
-    <div class="grid">
-      <div class="card">
-        <i class="fas fa-book-open"></i>
-        <h3>Stroke Technique Guides</h3>
-        <p><a href="https://example.com/freestyle.pdf" class="resource-link" target="_blank">Freestyle Mastery</a><br>
-           <a href="https://example.com/backstroke.pdf" class="resource-link" target="_blank">Perfect Backstroke</a><br>
-           <a href="https://example.com/breaststroke.pdf" class="resource-link" target="_blank">Breaststroke Timing</a></p>
-      </div>
-      <div class="card">
-        <i class="fas fa-utensils"></i>
-        <h3>Nutrition & Recovery</h3>
-        <p><a href="#" class="resource-link">7-Day Swimmer Meal Plan</a><br>
-           <a href="#" class="resource-link">Pre-Meet Nutrition Guide</a></p>
-      </div>
-      <div class="card">
-        <i class="fas fa-brain"></i>
-        <h3>Mental Preparation</h3>
-        <p><a href="#" class="resource-link">Race Day Mindset</a><br>
-           <a href="#" class="resource-link">Overcoming Performance Anxiety</a></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- LOGIN -->
-  <div class="section" id="login">
-    <h2>Swimmer Portal</h2>
-    <div class="login-box">
-      <p style="font-size:3em;">Swimmer</p>
-      <p>Enter your name to access your personal training plan</p>
-      <input type="text" id="swimmer-name" placeholder="e.g. Korra or Ethan">
-      <button onclick="login()">Enter Portal</button>
-    </div>
-  </div>
-
-  <!-- PRIVATE AREA -->
-  <div id="private-area">
-    <div class="section">
-      <h1 style="text-align:center;color:var(--primary);">Welcome back, <span id="display-name"></span>!</h1>
-      <div class="grid">
-        <div class="card"><h3>Today's Workout</h3><p id="workout">Loading...</p></div>
-        <div class="card"><h3>Current Goal</h3><p id="goal">Loading...</p></div>
-        <div class="card"><h3>Coach's Note</h3><p id="note">Loading...</p></div>
-        <div class="card"><h3>This Week's Focus</h3><p>Underwaters + race pace 50s</p></div>
-        <div class="card"><h3>Personal Bests (Nov 2025)</h3><div id="pbs" style="text-align:left;line-height:2;"></div></div>
-        <div class="card"><h3>Next Test Set</h3><p>Saturday 29 Nov — 8×50 @ 1:00 descending</p></div>
-      </div>
-      <button onclick="logout()" class="btn" style="display:block;margin:40px auto;">Logout</button>
-    </div>
-  </div>
-
-  <footer>
-    <p>© 2025 Swim Pulse Performance • Kampala, Uganda • Building Champions One Stroke at a Time</p>
-  </footer>
-
-<script>
-// === YOUR FIREBASE CONFIG (copy from your project settings) ===
-const firebaseConfig = {
-  apiKey: "AIzaSy****************************************",
-  authDomain: "swimpulse-korra-ethan.firebaseapp.com",
-  projectId: "swimpulse-korra-ethan",
-  storageBucket: "swimpulse-korra-ethan.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-function login() {
-  const name = document.getElementById('swimmer-name').value.trim();
-  if (!name) return alert("Please enter your name");
-
-  db.collection("swimmers").doc(name.toLowerCase()).get()
-    .then(doc => {
-      if (doc.exists) {
-        localStorage.setItem('swimmer', name.toLowerCase());
-        document.getElementById('display-name').textContent = name;
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('private-area').style.display = 'block';
-        
-        const d = doc.data();
-        document.getElementById('workout').innerHTML = d.todayWorkout || "Rest & recover";
-        document.getElementById('goal').textContent = d.goal || "Keep pushing!";
-        document.getElementById('note').textContent = d.strokeNote || "Great work this week!";
-        
-        const pbs = d.pbs || {};
-        document.getElementById('pbs').innerHTML = Object.entries(pbs)
-          .map(([event, time]) => `${event}: <span class="pb">${time}</span>`).join('<br>');
-      } else {
-        alert("Name not recognized. Please check spelling or contact coach.");
-      }
-    });
-}
-
-function logout() {
-  localStorage.removeItem('swimmer');
-  location.reload();
-}
-
-if (localStorage.getItem('swimmer')) {
-  document.getElementById('swimmer-name').value = localStorage.getItem('swimmer');
-  login();
-}
-</script>
-</body>
-</html>
+        <p>15+ years coaching | Multiple national champions | ASCA & NISCA certified | Specializes in stroke
