@@ -7,77 +7,160 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0a1d37">
   <link rel="icon" href="icon-192.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; background: #f0f7ff; margin:0; text-align:center; padding:20px; }
-    #login { margin-top:50px; }
-    input, button { padding:15px; font-size:1.2em; margin:10px; width:90%; max-width:400px; border-radius:12px; border:none; }
-    button { background:#0066ff; color:white; font-weight:bold; }
-    .card { background:white; margin:20px auto; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); max-width:500px; }
-    h1 { color:#0a1d37; }
-    #app { display:none; }
+    :root { --primary:#0a1d37; --accent:#00d4ff; --light:#f8fafc; --gold:#fbbf24; }
+    body { margin:0; font-family:'Inter',sans-serif; background:var(--light); color:#1e293b; line-height:1.6; }
+    header { background:linear-gradient(135deg,var(--primary),#1e40af); color:white; text-align:center; padding:80px 20px; }
+    h1 { font-size:3em; font-weight:900; margin:0; }
+    .btn { background:var(--accent); color:#000; padding:16px 32px; border-radius:50px; font-weight:bold; text-decoration:none; display:inline-block; margin:15px; font-size:1.1em; }
+    .section { padding:50px 20px; max-width:1200px; margin:auto; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
+    .card { background:white; border-radius:20px; padding:30px; box-shadow:0 12px 35px rgba(0,0,0,0.1); text-align:center; transition:0.3s; }
+    .card:hover { transform:translateY(-12px); box-shadow:0 20px 40px rgba(0,0,0,0.15); }
+    .card i { font-size:3.5em; color:var(--accent); margin-bottom:20px; }
+    .login-box { max-width:420px; margin:60px auto; background:white; padding:50px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.15); text-align:center; }
+    input, button { width:100%; padding:16px; margin:12px 0; border-radius:12px; border:none; font-size:1.1em; }
+    button { background:var(--primary); color:white; font-weight:bold; cursor:pointer; }
+    #private-area { display:none; background:var(--light); padding:40px 20px; }
+    .pb { font-weight:bold; color:var(--primary); }
+    footer { background:var(--primary); color:white; text-align:center; padding:40px; font-size:1.1em; }
+    .resource-link { color:var(--accent); text-decoration:none; font-weight:600; }
   </style>
 </head>
 <body>
 
-<div id="login">
-  <h1>Swim Pulse Performance</h1>
-  <p>Type your name to continue</p>
-  <input type="text" id="name" placeholder="Korra or Ethan" autocomplete="off">
-  <button onclick="login()">Enter</button>
-</div>
+  <!-- PUBLIC HOMEPAGE -->
+  <header>
+    <h1>Swim Pulse Performance</h1>
+    <p style="font-size:1.5em; margin:20px 0;">Uganda's Premier Youth Swimming Development Program</p>
+    <a href="#resources" class="btn">Free Resources</a>
+    <a href="#login" class="btn" style="background:white;color:#000;">Swimmer Login</a>
+  </header>
 
-<div id="app">
-  <h1>Welcome back, <span id="displayName"></span>!</h1>
-  <div class="card"><h2>Today's Workout</h2><p id="workout">Loading...</p></div>
-  <div class="card"><h2>Current Goal</h2><p id="goal">Loading...</p></div>
-  <div class="card"><h2>Latest Stroke Note</h2><p id="note">Loading...</p></div>
-  <div class="card"><h2>Personal Bests</h2><div id="pbs">Loading...</div></div>
-</div>
+  <div class="section" id="about">
+    <h2>About Swim Pulse Performance</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Our Mission</h3>
+        <p>Building confident, technically excellent swimmers through science-based training, individual attention, and a love for the sport.</p>
+      </div>
+      <div class="card">
+        <h3>Head Coach</h3>
+        <p>15+ years coaching | Multiple national champions | ASCA & NISCA certified | Specializes in stroke mechanics & race strategy</p>
+      </div>
+      <div class="card">
+        <h3>Results Speak</h3>
+        <p>100% PB improvement rate | Multiple East Africa records | Direct pathway to national team selection</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="resources">
+    <h2>Free Resources for All Swimmers</h2>
+    <div class="grid">
+      <div class="card">
+        <i class="fas fa-book-open"></i>
+        <h3>Stroke Technique Guides</h3>
+        <p><a href="https://example.com/freestyle.pdf" class="resource-link" target="_blank">Freestyle Mastery</a><br>
+           <a href="https://example.com/backstroke.pdf" class="resource-link" target="_blank">Perfect Backstroke</a><br>
+           <a href="https://example.com/breaststroke.pdf" class="resource-link" target="_blank">Breaststroke Timing</a></p>
+      </div>
+      <div class="card">
+        <i class="fas fa-utensils"></i>
+        <h3>Nutrition & Recovery</h3>
+        <p><a href="#" class="resource-link">7-Day Swimmer Meal Plan</a><br>
+           <a href="#" class="resource-link">Pre-Meet Nutrition Guide</a></p>
+      </div>
+      <div class="card">
+        <i class="fas fa-brain"></i>
+        <h3>Mental Preparation</h3>
+        <p><a href="#" class="resource-link">Race Day Mindset</a><br>
+           <a href="#" class="resource-link">Overcoming Performance Anxiety</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="section" id="login">
+    <h2>Swimmer Portal</h2>
+    <div class="login-box">
+      <p style="font-size:3em;">Swimmer</p>
+      <p>Enter your name to access your personal training plan</p>
+      <input type="text" id="swimmer-name" placeholder="e.g. Korra or Ethan">
+      <button onclick="login()">Enter Portal</button>
+    </div>
+  </div>
+
+  <!-- PRIVATE AREA -->
+  <div id="private-area">
+    <div class="section">
+      <h1 style="text-align:center;color:var(--primary);">Welcome back, <span id="display-name"></span>!</h1>
+      <div class="grid">
+        <div class="card"><h3>Today's Workout</h3><p id="workout">Loading...</p></div>
+        <div class="card"><h3>Current Goal</h3><p id="goal">Loading...</p></div>
+        <div class="card"><h3>Coach's Note</h3><p id="note">Loading...</p></div>
+        <div class="card"><h3>This Week's Focus</h3><p>Underwaters + race pace 50s</p></div>
+        <div class="card"><h3>Personal Bests (Nov 2025)</h3><div id="pbs" style="text-align:left;line-height:2;"></div></div>
+        <div class="card"><h3>Next Test Set</h3><p>Saturday 29 Nov — 8×50 @ 1:00 descending</p></div>
+      </div>
+      <button onclick="logout()" class="btn" style="display:block;margin:40px auto;">Logout</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Swim Pulse Performance • Kampala, Uganda • Building Champions One Stroke at a Time</p>
+  </footer>
 
 <script>
-// === PUT YOUR FIREBASE CONFIG HERE (copy from your Firebase project) ===
+// === YOUR FIREBASE CONFIG (copy from your project settings) ===
 const firebaseConfig = {
-  apiKey: "AIzaSy*************************************************",
+  apiKey: "AIzaSy****************************************",
   authDomain: "swimpulse-korra-ethan.firebaseapp.com",
   projectId: "swimpulse-korra-ethan",
   storageBucket: "swimpulse-korra-ethan.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef1234567890"
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef123456"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function login() {
-  const name = document.getElementById('name').value.trim();
+  const name = document.getElementById('swimmer-name').value.trim();
   if (!name) return alert("Please enter your name");
-  
-  localStorage.setItem('swimmer', name.toLowerCase());
-  document.getElementById('login').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('displayName').textContent = name;
-  
+
   db.collection("swimmers").doc(name.toLowerCase()).get()
     .then(doc => {
       if (doc.exists) {
+        localStorage.setItem('swimmer', name.toLowerCase());
+        document.getElementById('display-name').textContent = name;
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('private-area').style.display = 'block';
+        
         const d = doc.data();
-        document.getElementById('workout').innerHTML = d.todayWorkout || "Rest day";
-        document.getElementById('goal').textContent = d.goal || "No goal set";
-        document.getElementById('note').textContent = d.strokeNote || "No new notes";
+        document.getElementById('workout').innerHTML = d.todayWorkout || "Rest & recover";
+        document.getElementById('goal').textContent = d.goal || "Keep pushing!";
+        document.getElementById('note').textContent = d.strokeNote || "Great work this week!";
+        
         const pbs = d.pbs || {};
         document.getElementById('pbs').innerHTML = Object.entries(pbs)
-          .map(([event, time]) => `<strong>${event}:</strong> ${time}`).join('<br>');
+          .map(([event, time]) => `${event}: <span class="pb">${time}</span>`).join('<br>');
       } else {
-        document.getElementById('workout').textContent = "Welcome! Coach will add your plan soon.";
+        alert("Name not recognized. Please check spelling or contact coach.");
       }
     });
 }
 
-// Auto-login if they return
+function logout() {
+  localStorage.removeItem('swimmer');
+  location.reload();
+}
+
 if (localStorage.getItem('swimmer')) {
-  document.getElementById('name').value = localStorage.getItem('swimmer');
+  document.getElementById('swimmer-name').value = localStorage.getItem('swimmer');
   login();
 }
 </script>
