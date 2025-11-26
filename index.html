@@ -4,27 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Swim Pulse Performance</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a1d37">
-  <link rel="icon" href="icon-192.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
     :root { --p:#0a1d37; --a:#00d4ff; }
-    body { margin:0; font-family:'Inter',sans-serif; background:#f8fafc; }
-    header { background:linear-gradient(rgba(10,29,55,0.8),rgba(30,64,175,0.7)), url('https://cdn.britannica.com/01/193601-050-F8F18A9B/Katie-Ledecky-American-lead-way-women-world-2016.jpg') center/cover fixed; color:white; text-align:center; padding:120px 20px; }
-    h1 { font-size:3.5em; margin:0; text-shadow:3px 3px 10px #000; }
-    .sub { font-size:1.8em; font-weight:600; text-shadow:2px 2px 8px #000; }
-    .btn { background:var(--a); color:black; padding:16px 36px; border-radius:50px; font-weight:bold; margin:15px; text-decoration:none; display:inline-block; }
+    body { margin:0; font-family:'Inter',sans-serif; background:#f8fafc; color:#1e293b; }
+    header { background:linear-gradient(rgba(10,29,55,0.85),rgba(30,64,175,0.7)), url('https://cdn.britannica.com/01/193601-050-F8F18A9B/Katie-Ledecky-American-lead-way-women-world-2016.jpg') center/cover fixed; color:white; text-align:center; padding:140px 20px; }
+    h1 { font-size:3.6em; margin:0; text-shadow:4px 4px 12px #000; }
+    .sub { font-size:1.9em; font-weight:600; text-shadow:2px 2px 8px #000; }
+    .btn { background:var(--a); color:#000; padding:16px 40px; border-radius:50px; font-weight:bold; margin:15px; text-decoration:none; display:inline-block; font-size:1.2em; }
     .btn-w { background:white; color:var(--p); }
-    .login-box { max-width:420px; margin:70px auto; background:white; padding:50px; border-radius:25px; box-shadow:0 25px 60px rgba(0,0,0,0.2); text-align:center; }
+    .login-box { max-width:420px; margin:80px auto; background:white; padding:50px 30px; border-radius:25px; box-shadow:0 30px 70px rgba(0,0,0,0.2); text-align:center; }
     input, button { width:100%; padding:16px; margin:12px 0; border-radius:12px; border:none; font-size:1.1em; }
-    button { background:var(--p); color:white; font-weight:bold; }
-    #private { display:none; }
-    .card { background:white; margin:20px; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+    button { background:var(--p); color:white; font-weight:bold; cursor:pointer; }
+    #private { display:none; padding:40px 20px; max-width:1100px; margin:auto; }
+    .card { background:white; border-radius:20px; padding:25px; margin:20px 0; box-shadow:0 12px 40px rgba(0,0,0,0.1); }
+    table { width:100%; border-collapse:collapse; margin:20px 0; }
+    th, td { border:1px solid #ddd; padding:14px; text-align:left; }
+    th { background:var(--p); color:white; }
     .pb { font-weight:bold; color:var(--p); }
+    footer { background:var(--p); color:white; text-align:center; padding:40px; }
   </style>
 </head>
 <body>
@@ -32,62 +33,75 @@
 <header>
   <h1>Swim Pulse Performance</h1>
   <p class="sub">A Science-Based Swim Program</p>
-  <a href="#resources" class="btn">Free Resources</a>
   <a href="#login" class="btn btn-w">Swimmer Login</a>
 </header>
 
 <div class="login-box" id="login">
-  <p style="font-size:4em;">Swimmer</p>
-  <input type="text" id="name" placeholder="Enter your name (e.g. Ethan)">
+  <p style="font-size:4em;margin:10px 0;">Swimmer</p>
+  <input type="text" id="name" placeholder="Enter your name (Ethan / Korra)">
   <button onclick="login()">Enter Portal</button>
 </div>
 
 <div id="private">
-  <div style="padding:40px 20px; text-align:center;">
-    <h1 style="color:var(--p);">Welcome back, <span id="display"></span>!</h1>
-    <div class="card"><h3>Today's Workout</h3><p id="workout">…</p></div>
-    <div class="card"><h3>Current Goal</h3><p id="goal">…</p></div>
-    <div class="card"><h3>Coach's Note</h3><p id="note">…</p></div>
-    <div class="card"><h3>Personal Bests (Nov 2025)</h3><div id="pbs" style="text-align:left;"></div></div>
-    <button onclick="localStorage.removeItem('swimmer');location.reload()" class="btn" style="margin:30px;">Logout</button>
+  <h1 style="text-align:center;color:var(--p);">Welcome back, <span id="display"></span>!</h1>
+
+  <div class="card"><h3>Daily Warm-up (Do this every training day)</h3>
+    <p>30 Jumping Jacks<br>10 Burpees<br>3 × 1 min Iso Plank (minimum 1 min each)</p>
   </div>
+
+  <div class="card"><h3>Today’s Workout</h3><p id="workout">Loading…</p></div>
+  <div class="card"><h3>Current Goal</h3><p id="goal">Loading…</p></div>
+  <div class="card"><h3>Coach's Note</h3><p id="note">Loading…</p></div>
+
+  <div class="card">
+    <h3>Week 5 – Core & Flexibility Dryland Program</h3>
+    <table>
+      <tr><th>Day</th><th>Exercise</th><th>Sets × Reps</th></tr>
+      <tr><td>MON</td><td>1. Swipers<br>2. Bicycle Crunches<br>3. Toe Taps</td><td>3×15<br>3×15<br>3×15</td></tr>
+      <tr><td>TUE</td><td>1. Squat Jumps<br>2. P.R Squats<br>3. 90-90 Squat</td><td>3×15<br>3×15<br>3×15</td></tr>
+      <tr><td>WED</td><td>1. Push-ups (Normal)<br>2. Tri-cep dips (Chair)<br>3. Tyson Pushups</td><td>3×10<br>3×15<br>3×10</td></tr>
+      <tr><td>THU</td><td>1. Hip Thrusters<br>2. Hip bridge (S + D)<br>3. 90-90 Squat</td><td>3×15<br>3×15<br>3×15</td></tr>
+      <tr><td>FRI</td><td>1. Duck walk<br>2. Bear Crawls<br>3. Swipers</td><td>3×10m<br>3×20m<br>3×15</td></tr>
+      <tr><td>SAT</td><td>1. Tyson Pushups<br>2. Squat Jumps<br>3. Toe taps</td><td>3×10<br>3×15<br>3×15</td></tr>
+      <tr><td>SUN</td><td colspan="2"><b>Assessment Day + Full Recovery</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Personal Bests (as of 25 Nov 2025)</h3>
+    <div id="pbs" style="line-height:2.2;"></div>
+  </div>
+
+  <button onclick="localStorage.removeItem('swimmer');location.reload()" class="btn" style="display:block;margin:50px auto;">Logout</button>
 </div>
 
+<footer>© 2025 Swim Pulse Performance • Kampala, Uganda</footer>
+
 <script>
-// ←←← PASTE YOUR REAL CONFIG HERE (from step 4) ←←←
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
-};
+// ←←← PASTE YOUR REAL CONFIG HERE ←←←
+const firebaseConfig = { apiKey: "YOUR_API_KEY", authDomain: "your-project.firebaseapp.com", projectId: "your-project-id", storageBucket: "your-project.appspot.com", messagingSenderId: "123456789", appId: "1:123456789:web:abcdef123456" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function login() {
-  const name = document.getElementById('name').value.trim();
-  if (!name) return alert("Enter name");
-  db.collection("swimmers").doc(name.toLowerCase()).get().then(doc => {
+  const name = document.getElementById('name').value.trim().toLowerCase();
+  if (!name) return alert("Enter your name");
+  db.collection("swimmers").doc(name).get().then(doc => {
     if (doc.exists) {
-      localStorage.setItem('swimmer', name.toLowerCase());
+      localStorage.setItem('swimmer', name);
       const d = doc.data();
       document.getElementById('display').textContent = d.name;
-      document.getElementById('workout').innerHTML = d.todayWorkout;
+      document.getElementById('workout').innerHTML = d.todayWorkout || "Rest & recover";
       document.getElementById('goal').textContent = d.goal;
       document.getElementById('note').textContent = d.strokeNote;
       document.getElementById('pbs').innerHTML = Object.entries(d.pbs||{})
         .map(([e,t])=>`${e}: <span class="pb">${t}</span>`).join('<br>');
       document.getElementById('login').style.display='none';
       document.getElementById('private').style.display='block';
-    } else alert("Name not found — contact coach");
+    } else alert("Name not found");
   });
 }
-if (localStorage.getItem('swimmer')) {
-  document.getElementById('name').value = localStorage.getItem('swimmer');
-  login();
-}
+if (localStorage.getItem('swimmer')) login();
 </script>
 </body>
 </html>
